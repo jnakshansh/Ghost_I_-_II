@@ -28,14 +28,68 @@ public class TrieNode {
     }
 
     public void add(String s) {
+        HashMap<String, TrieNode> child = children;
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+
+            TrieNode t;
+            if(child.containsKey(c)){
+                t = child.get(c);
+            }else{
+                t = new TrieNode();
+                child.put(String.valueOf(c), t);
+            }
+
+            child = t.children;
+
+            //set leaf node
+            if(i==s.length()-1)
+                t.isWord = true;
+        }
     }
 
     public boolean isWord(String s) {
-      return false;
+        TrieNode t = searchNode(s);
+
+        if(t != null && t.isWord)
+            return true;
+        else
+            return false;
+    }
+
+    public TrieNode searchNode(String s){
+        HashMap<String, TrieNode> child = children;
+        TrieNode t = null;
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+            if(child.containsKey(c)){
+                t = child.get(c);
+                child = t.children;
+            }else{
+                return null;
+            }
+        }
+
+        return t;
     }
 
     public String getAnyWordStartingWith(String s) {
-        return null;
+
+        TrieNode t = searchNode(s);
+        String output = s +"";
+        HashMap<String,TrieNode> child;
+        if(t==null){
+            return null;
+        }
+        else{
+            while(!t.isWord){
+                child = t.children;
+                Character nextKey = (Character)child.keySet().toArray()[0];
+                output = output + nextKey;
+                t = child.get(nextKey);
+            }
+        }
+        return output;
     }
 
     public String getGoodWordStartingWith(String s) {

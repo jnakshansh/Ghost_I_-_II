@@ -27,7 +27,7 @@ public class GhostActivity extends AppCompatActivity {
         wordTextView = (TextView)findViewById(R.id.ghostText);
         label = (TextView) findViewById(R.id.gameStatus);
         try {
-            dictionary = new SimpleDictionary(getAssets().open("words.txt"));
+            dictionary = new FastDictionary(getAssets().open("words.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }

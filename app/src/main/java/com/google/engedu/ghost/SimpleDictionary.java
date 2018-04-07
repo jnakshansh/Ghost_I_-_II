@@ -50,7 +50,7 @@ public class SimpleDictionary implements GhostDictionary {
             return words.get(random.nextInt(words.size()));
 
         }*/
-        if(prefix == null || prefix.trim().equals("")){
+        if(prefix.isEmpty() || prefix.trim().equals("")){
             Random random = new Random();
             return words.get(random.nextInt(words.size()));
         }
